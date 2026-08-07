@@ -1,81 +1,50 @@
 package com.github.tknudsen.attributeCharacterization.view.panels;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-
-import javax.swing.JPanel;
 
 import com.github.TKnudsen.ComplexDataObject.model.io.parsers.objects.IObjectParser;
-import com.github.TKnudsen.ComplexDataObject.model.tools.StatisticsSupport;
-import com.github.TKnudsen.infoVis.view.panels.boxplot.BoxPlotHorizontalChartPanel;
-import com.github.TKnudsen.infoVis.view.panels.distribution1D.Distribution1DHorizontalPanel;
-import com.github.TKnudsen.infoVis.view.panels.distribution1D.Distribution1DPanels;
 
 /**
  * <p>
- * AttributeCharacterization
+ * Panel for discrete integer attribute characterization.
  * </p>
- * 
- * <p>
- * </p>
- * 
- * <p>
- * Copyright: (c) 2016-2025 Juergen Bernard,
- * https://github.com/TKnudsen/AttributeCharacterization
- * </p>
- * 
- * @author Juergen Bernard
- * @version 1.01
+ *
+ * @version 2.0
+ * @since 2016
  */
-public class NumericalIntegerAttributeCharacteristicsPanel extends AttributeCharacteristicsPanel<Integer> {
+public class NumericalIntegerAttributeCharacteristicsPanel extends NumericalAttributeCharacteristicsPanel<Integer> {
+
+	// ==================== CONSTRUCTORS ====================
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Creates an editable panel for integer attribute characterization.
+	 *
+	 * @param values the collection of raw attribute values
+	 * @param parser the parser used to convert raw objects to Integer
+	 * @param missingValueIndicator the sentinel value representing missing data
 	 */
-	private static final long serialVersionUID = -1617737257897086025L;
-
 	public NumericalIntegerAttributeCharacteristicsPanel(Collection<Object> values, IObjectParser<Integer> parser,
 			Integer missingValueIndicator) {
 		super(values, parser, missingValueIndicator);
 	}
 
+	/**
+	 * Creates a panel for integer attribute characterization with a read-only option.
+	 *
+	 * @param values the collection of raw attribute values
+	 * @param parser the parser used to convert raw objects to Integer
+	 * @param missingValueIndicator the sentinel value representing missing data
+	 * @param readOnly if true, the panel does not allow user-driven type changes
+	 */
 	public NumericalIntegerAttributeCharacteristicsPanel(Collection<Object> values, IObjectParser<Integer> parser,
 			Integer missingValueIndicator, boolean readOnly) {
 		super(values, parser, missingValueIndicator, readOnly);
 	}
 
-	@Override
-	protected void addContentToValueDistributionPanel() {
-		Collection<Integer> parsedValues = getParsedValues();
-
-		if (parsedValues.size() == 0)
-			return;
-
-		StatisticsSupport dataStatistics = new StatisticsSupport(parsedValues);
-
-		JPanel contentPanel = new JPanel();
-		contentPanel.setLayout(new GridLayout(2, 0));
-
-		BoxPlotHorizontalChartPanel infoVisBoxPlotHorizontalPanel = new BoxPlotHorizontalChartPanel(dataStatistics);
-		infoVisBoxPlotHorizontalPanel.setBackgroundColor(null);
-		contentPanel.add(infoVisBoxPlotHorizontalPanel);
-
-		List<Double> values = new ArrayList<>();
-		for (Integer i : getParsedValues())
-			values.add(i.doubleValue());
-
-//		Distribution1DHorizontalPanel<Double> infoVisDistribution1DHorizontalPanel = Distribution1DHorizontalPanels
-//				.createForDoubles(values);
-		Distribution1DHorizontalPanel<Double> infoVisDistribution1DHorizontalPanel = (Distribution1DHorizontalPanel<Double>) Distribution1DPanels
-				.createForDoubles(values, false);
-		infoVisDistribution1DHorizontalPanel.setBackgroundColor(null);
-		contentPanel.add(infoVisDistribution1DHorizontalPanel);
-
-		valueDistributionPanel.add(contentPanel, BorderLayout.CENTER);
-	}
+	// ==================== IMPLEMENTATION ====================
 
 	@Override
 	protected Class<Integer> getClassType() {
@@ -86,5 +55,4 @@ public class NumericalIntegerAttributeCharacteristicsPanel extends AttributeChar
 	public String getName() {
 		return "Numerical (discrete, integer) Properties";
 	}
-
 }

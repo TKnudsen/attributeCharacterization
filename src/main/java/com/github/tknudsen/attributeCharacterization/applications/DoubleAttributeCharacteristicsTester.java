@@ -10,23 +10,19 @@ import com.github.tknudsen.attributeCharacterization.view.panels.NumericalContin
 
 /**
  * <p>
- * AttributeCharacterization
- * </p>
- * 
- * <p>
  * Tester for double values.
  * </p>
- * 
- * <p>
- * Copyright: (c) 2016-2025 Juergen Bernard,
- * https://github.com/TKnudsen/AttributeCharacterization
- * </p>
- * 
- * @author Juergen Bernard
+ *
  * @version 1.01
+ * @since 2016
  */
 public class DoubleAttributeCharacteristicsTester {
 
+	/**
+	 * Launches the double attribute characterization tester.
+	 *
+	 * @param args command-line arguments (not used)
+	 */
 	public static void main(String[] args) {
 
 		Collection<Object> values = new ArrayList<Object>();

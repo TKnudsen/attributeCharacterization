@@ -1,7 +1,6 @@
 package com.github.tknudsen.attributeCharacterization.view.views;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.Collection;
@@ -15,30 +14,28 @@ import com.github.TKnudsen.infoVis.view.frames.SVGFrame;
 
 /**
  * <p>
- * AttributeCharacterization
+ * Frame wrapping an {@link AttributeTypeSelectionView} for
+ * interactive attribute type and parser selection.
  * </p>
- * 
- * <p>
- * </p>
- * 
- * <p>
- * Copyright: (c) 2016-2025 Juergen Bernard,
- * https://github.com/TKnudsen/AttributeCharacterization
- * </p>
- * 
- * @author Juergen Bernard
- * @version 1.01
+ *
+ * @version 1.02
+ * @since 2016
  */
 public class AttributeTypeSelectionFrame extends SVGFrame implements AttributeTypeAndParserDetector {
 
-	/**
-	 * 
-	 */
+	/** Serial version UID. */
 	private static final long serialVersionUID = -2263072137892221324L;
 
+	/** Window title also used as attribute name label. */
 	private final String title;
+	/** Embedded view that drives the type-selection interaction. */
 	private AttributeTypeSelectionView attributeTypeSelectionView;
 
+	/**
+	 * Creates and displays a full-screen attribute type selection frame.
+	 *
+	 * @param title the window title shown to the user
+	 */
 	public AttributeTypeSelectionFrame(String title) {
 		this.title = title;
 
@@ -48,15 +45,12 @@ public class AttributeTypeSelectionFrame extends SVGFrame implements AttributeTy
 	private final void initialize() {
 		setTitle(title);
 
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		getContentPane().setLayout(new GridLayout(0, 1));
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize.width, screenSize.height - 45);
-//		setSize(1200, 800);
-//		setLocation(200, 200);
 
 		setVisible(true);
 
@@ -69,21 +63,28 @@ public class AttributeTypeSelectionFrame extends SVGFrame implements AttributeTy
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-//				if (JOptionPane.showConfirmDialog(null, "Do you want to store null values?", "Store attribute values?",
-//						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-
 				attributeTypeSelectionView.forceNullReturn();
 			}
 		});
 	}
 
+	/**
+	 * Propagates title changes to the embedded view so that the "Title to
+	 * Clipboard" button always reflects the currently displayed attribute.
+	 */
 	@Override
-	public void paintComponents(Graphics g) {
-		super.paintComponents(g);
+	public void setTitle(String title) {
+		super.setTitle(title);
 
-		System.out.println("TEST");
+		if (attributeTypeSelectionView != null)
+			attributeTypeSelectionView.setTitle(title);
 	}
 
+	/**
+	 * Creates the embedded attribute type selection view.
+	 *
+	 * @return a new {@link AttributeTypeSelectionView} for this frame's title
+	 */
 	public AttributeTypeSelectionView createAttributeTypeSelectionView() {
 		return new AttributeTypeSelectionView(title);
 	}
@@ -94,8 +95,6 @@ public class AttributeTypeSelectionFrame extends SVGFrame implements AttributeTy
 
 		this.dispose();
 
-		// System.out.println("AttributeTypeSelectionFramw: attribute type decision
-		// detected. return.");
 		return attributeType;
 	}
 
@@ -104,15 +103,7 @@ public class AttributeTypeSelectionFrame extends SVGFrame implements AttributeTy
 		Entry<Class<T>, IObjectParser<T>> attributeTypeAndParserType = attributeTypeSelectionView
 				.getAttributeTypeAndParserType(values);
 
-		// no. do not do this here. otherwise you can only use it once
-		// this.dispose();
-
 		return attributeTypeAndParserType;
-	}
-
-	@Override
-	public String getTitle() {
-		return title;
 	}
 
 }

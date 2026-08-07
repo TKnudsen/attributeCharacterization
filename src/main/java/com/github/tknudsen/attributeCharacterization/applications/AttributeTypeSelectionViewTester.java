@@ -8,24 +8,20 @@ import com.github.tknudsen.attributeCharacterization.view.views.AttributeTypeSel
 
 /**
  * <p>
- * AttributeCharacterization
- * </p>
- * 
- * <p>
  * Tester for diverse values, to prove the effectiveness of the attribute
  * characterization guidance components.
  * </p>
- * 
- * <p>
- * Copyright: (c) 2016-2025 Juergen Bernard,
- * https://github.com/TKnudsen/AttributeCharacterization
- * </p>
- * 
- * @author Juergen Bernard
+ *
  * @version 1.01
+ * @since 2016
  */
 public class AttributeTypeSelectionViewTester {
 
+	/**
+	 * Launches the attribute type selection view tester.
+	 *
+	 * @param args command-line arguments (not used)
+	 */
 	public static void main(String[] args) {
 
 		Collection<Object> values = new ArrayList<Object>();

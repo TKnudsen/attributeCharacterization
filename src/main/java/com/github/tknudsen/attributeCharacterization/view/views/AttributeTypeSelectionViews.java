@@ -21,24 +21,24 @@ import com.github.tknudsen.attributeCharacterization.view.panels.NumericalLongAt
 
 /**
  * <p>
- * AttributeCharacterization
+ * Factory to create {@link AttributeCharacteristicsPanel}s for all supported
+ * attribute types.
  * </p>
- * 
- * <p>
- * Factory to create AttributeCharacteristicsPanels for all supported attribute
- * types.
- * </p>
- * 
- * <p>
- * Copyright: (c) 2016-2025 Juergen Bernard,
- * https://github.com/TKnudsen/AttributeCharacterization
- * </p>
- * 
- * @author Juergen Bernard
+ *
  * @version 1.01
+ * @since 2016
  */
 public class AttributeTypeSelectionViews {
 
+	/**
+	 * Creates one characterization panel per supported attribute type, each wired
+	 * to the given action listener.
+	 *
+	 * @param values   the collection of raw attribute values
+	 * @param listener the listener that receives accept/ignore decisions
+	 * @param readOnly if true, the panels do not allow user-driven type changes
+	 * @return ordered map of panels to their associated parsers
+	 */
 	public static LinkedHashMap<AttributeCharacteristicsPanel<?>, IObjectParser<?>> createPanelsWithParsers(
 			Collection<Object> values, ActionListener listener, boolean readOnly) {
 		LinkedHashMap<AttributeCharacteristicsPanel<?>, IObjectParser<?>> panelsWithParsers = new LinkedHashMap<>();

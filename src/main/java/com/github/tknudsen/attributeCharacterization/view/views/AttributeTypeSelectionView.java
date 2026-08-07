@@ -29,43 +29,53 @@ import com.github.tknudsen.attributeCharacterization.view.panels.AttributeCharac
 
 /**
  * <p>
- * AttributeCharacterization
+ * Interactive panel that presents all candidate attribute type
+ * panels and blocks until the user accepts one.
  * </p>
- * 
- * <p>
- * </p>
- * 
- * <p>
- * Copyright: (c) 2016-2025 Juergen Bernard,
- * https://github.com/TKnudsen/AttributeCharacterization
- * </p>
- * 
- * @author Juergen Bernard
+ *
  * @version 1.01
+ * @since 2016
  */
 public class AttributeTypeSelectionView extends JPanel implements AttributeTypeAndParserDetector, ActionListener {
 
-	/**
-	 * 
-	 */
+	/** Serial version UID. */
 	private static final long serialVersionUID = 8364345034820702346L;
 
-	private final String title;
+	/** Attribute name shown as label and copied to the clipboard. */
+	private String title;
+	/** Raw attribute values being characterised. */
 	protected Collection<Object> values;
+	/** Whether to show the raw-value text pane. */
 	private final boolean showRawValues;
 
+	/** Ordered list of type-specific characterization panels. */
 	protected List<AttributeCharacteristicsPanel<?>> attributeCharacteristicsPanels;
 
 	// return types
+	/** Flag set to true once the user (or a forced null-return) makes a decision. */
 	private boolean decisionMade = false;
+	/** The accepted attribute class type, or null if skipped. */
 	private Class<?> classType;
+	/** The accepted parser, or null if skipped. */
 	private IObjectParser<?> parser;
 
+	/**
+	 * Creates a view without values; call {@link #getAttributeType(Collection)}
+	 * or {@link #getAttributeTypeAndParserType(Collection)} to supply them later.
+	 *
+	 * @param title the attribute name shown to the user
+	 */
 	public AttributeTypeSelectionView(String title) {
 		this.title = title;
 		this.showRawValues = true;
 	}
 
+	/**
+	 * Creates a view pre-loaded with values and immediately refreshes the UI.
+	 *
+	 * @param title the attribute name shown to the user
+	 * @param values the collection of raw attribute values
+	 */
 	public AttributeTypeSelectionView(String title, Collection<Object> values) {
 		this.title = title;
 		this.values = Objects.requireNonNull(values);
@@ -91,27 +101,17 @@ public class AttributeTypeSelectionView extends JPanel implements AttributeTypeA
 		// Copy attribute to clip board
 		JButton clipboardButton = new JButton("Title to Clipboard");
 		southPanel.add(clipboardButton, BorderLayout.SOUTH);
-		clipboardButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Toolkit toolkit = Toolkit.getDefaultToolkit();
-				Clipboard clipboard = toolkit.getSystemClipboard();
-				StringSelection strSel = new StringSelection(title);
-				clipboard.setContents(strSel, null);
-			}
+		clipboardButton.addActionListener(e -> {
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Clipboard clipboard = toolkit.getSystemClipboard();
+			StringSelection strSel = new StringSelection(title);
+			clipboard.setContents(strSel, null);
 		});
 
 		// Skip functionality
 		JButton skipButton = new JButton("Skip Attribute");
 		southPanel.add(skipButton, BorderLayout.SOUTH);
-		skipButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				forceNullReturn();
-			}
-		});
+		skipButton.addActionListener(e -> forceNullReturn());
 
 		valuesPanel.add(southPanel, BorderLayout.SOUTH);
 
@@ -122,12 +122,12 @@ public class AttributeTypeSelectionView extends JPanel implements AttributeTypeA
 			int length = 0;
 			for (Object o : values)
 				if (o != null) {
-					builder.append((o.toString() + ", "));
-
-					length += (o.toString() + ", ").length();
+					var s = o.toString() + ", ";
+					builder.append(s);
+					length += s.length();
 					if (length > 5000) {
 						System.out.println(this.getClass().getSimpleName()
-								+ ": stopped bringing more Raw Values data to screen after 5000 characters");
+								+ ": stopped bringing more Raw Values data to screen after 1000 characters");
 						break;
 					}
 				}
@@ -149,8 +149,7 @@ public class AttributeTypeSelectionView extends JPanel implements AttributeTypeA
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e instanceof AttributeTypeDecisionActionEvent) {
-			AttributeTypeDecisionActionEvent<?> event = (AttributeTypeDecisionActionEvent<?>) e;
+		if (e instanceof AttributeTypeDecisionActionEvent<?> event) {
 			classType = event.getAttributeType();
 			parser = event.getParser();
 
@@ -217,6 +216,10 @@ public class AttributeTypeSelectionView extends JPanel implements AttributeTypeA
 		System.out.println("AttributeTypeSelectionView: null return forced by external trigger");
 	}
 
+	/**
+	 * Populates {@link #attributeCharacteristicsPanels} with one panel per
+	 * supported attribute type.
+	 */
 	protected void initializeAttributeCharacteristicsPanels() {
 		attributeCharacteristicsPanels = new ArrayList<>();
 
@@ -228,8 +231,23 @@ public class AttributeTypeSelectionView extends JPanel implements AttributeTypeA
 
 	}
 
+	/**
+	 * Returns whether the raw-value text pane is shown.
+	 *
+	 * @return true if raw values are displayed
+	 */
 	public boolean isShowRawValues() {
 		return showRawValues;
+	}
+
+	/**
+	 * Updates the attribute title used as the "Title to Clipboard" button's
+	 * clipboard content.
+	 *
+	 * @param title the new title
+	 */
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }
