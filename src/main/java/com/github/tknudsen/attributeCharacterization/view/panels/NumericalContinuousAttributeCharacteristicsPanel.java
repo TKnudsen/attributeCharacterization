@@ -2,8 +2,6 @@ package com.github.tknudsen.attributeCharacterization.view.panels;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collection;
 
 import javax.swing.JCheckBox;
