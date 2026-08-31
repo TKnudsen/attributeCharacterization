@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 import com.github.TKnudsen.ComplexDataObject.model.io.parsers.objects.IObjectParser;
 import com.github.TKnudsen.ComplexDataObject.model.tools.MathFunctions;
-import com.github.TKnudsen.infoVis.view.panels.barchart.BarChartHorizontal;
+import com.github.TKnudsen.infoVis.view.panels.barchart.BarChartHorizontalValueBased;
 
 /**
  * <p>
@@ -78,7 +78,7 @@ public class CategoricalAttributeCharacteristicsPanel extends AttributeCharacter
 		this.cardinality = counts.size();
 
 		// Create bar chart
-		BarChartHorizontal chart = createBarChart(counts);
+		BarChartHorizontalValueBased chart = createBarChart(counts);
 		chart.setBackground(null);
 		valueDistributionPanel.add(chart, BorderLayout.CENTER);
 
@@ -105,7 +105,7 @@ public class CategoricalAttributeCharacteristicsPanel extends AttributeCharacter
 	/**
 	 * Create bar chart from frequency counts.
 	 */
-	private BarChartHorizontal createBarChart(Map<String, Integer> counts) {
+	private BarChartHorizontalValueBased createBarChart(Map<String, Integer> counts) {
 		// Convert to chart data
 		List<Double> data = new ArrayList<>(counts.size());
 		List<Color> colors = new ArrayList<>(counts.size());
@@ -115,7 +115,7 @@ public class CategoricalAttributeCharacteristicsPanel extends AttributeCharacter
 			colors.add(DEFAULT_BAR_COLOR);
 		}
 
-		return new BarChartHorizontal(data, colors);
+		return new BarChartHorizontalValueBased(data, colors);
 	}
 
 	/**

@@ -8,7 +8,10 @@
 	<version>0.1.0-SNAPSHOT</version>
 
 	<name>attributeCharacterization</name>
-	<description>A data attribute characterization library that helps parsing, analyzing, and interpreting data attributes (columns of data tables). Interactive visual interfaces ease the task even for non-programmers and lay users, enabling attribute characterization for the masses.</description>
+	<description>A data attribute characterization library that helps parsing,
+		analyzing, and interpreting data attributes (columns of data tables).
+		Interactive visual interfaces ease the task even for non-programmers and
+		lay users, enabling attribute characterization for the masses.</description>
 	<url>https://github.com/TKnudsen/attributeCharacterization</url>
 
 	<licenses>
@@ -21,7 +24,8 @@
 	<scm>
 		<url>https://github.com/TKnudsen/attributeCharacterization</url>
 		<connection>https://github.com/TKnudsen/attributeCharacterization.git</connection>
-		<developerConnection>https://github.com/TKnudsen/attributeCharacterization.git</developerConnection>
+		<developerConnection>
+			https://github.com/TKnudsen/attributeCharacterization.git</developerConnection>
 	</scm>
 
 	<developers>
@@ -59,12 +63,12 @@
 		<dependency>
 			<groupId>com.github.tknudsen</groupId>
 			<artifactId>complex-data-object</artifactId>
-			<version>0.3.0-SNAPSHOT</version>
+			<version>0.3.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.tknudsen</groupId>
 			<artifactId>dm-and-ml</artifactId>
-			<version>0.0.6-SNAPSHOT</version>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.tknudsen</groupId>
